@@ -55,7 +55,7 @@
     ()))
 
 (defn registration-process [client]
-  )
+)
 
 (defn client-exit [client]
   (println "Client requested to close socket:" (client :socket))
@@ -64,7 +64,10 @@
 
 
 (defn zone-client [client]
+)
 
+
+(defn login-process [client]
 )
 
 
@@ -75,8 +78,8 @@
                             "\t3 - exit\n"
                             "=> "))
   (case (client-prompt client)
-    "1" (login-process)
-    "2" (registration-process)
+    "1" (login-process client)
+    "2" (registration-process client)
     "3" (client-exit client)
     (do (client-println client "Invalid option.")
         (main-menu client))))
@@ -114,7 +117,6 @@
             (catch IOException ex
               (println "Server could not bind to port " port ".")))))))
 
-(defn -main
-  "I don't do a whole lot."
-  [& args]
-  (println "Hello, World!"))
+(defn -main [& args]
+  (println "h0h0!,... server start!")
+  (server))
