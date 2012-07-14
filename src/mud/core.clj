@@ -27,7 +27,6 @@
   (.close (client :input))
   (.close (client :output))
   (.close (client :socket))
-  (println "Current clients: " @clients)
   (dosync (ref-set clients (remove #(= client %) @clients)))
   (println "Killed client:" (client :socket))
   (throw (ClientClosedConnectionException. (str "Client socket closed: " (client :socket)))))
@@ -94,7 +93,9 @@
           (main-menu client)))))
 
 (defn sync-and-thread-client [client]
-    (.start (Thread. #(main-menu (sync-client client)))))
+  (.start (Thread. #(try (main-menu (sync-client client))
+                         (catch ClientClosedConnectionException ex
+                           (println "Client thread death:" (Thread/currentThread)))))))
 
 (defn await-connection [server]
   (println "Waiting for a client connection...")
