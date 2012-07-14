@@ -58,7 +58,7 @@
   )
 
 (defn client-exit [client]
-  (println "Client requested to close socket: " (client :socket))
+  (println "Client requested to close socket:" (client :socket))
   (kill-client client))
 
 
